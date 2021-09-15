@@ -7,14 +7,14 @@ const { check, validationResult } = require("express-validator");
 const config = require("config");
 
 const JWT_SECRET = config.get("JWT_SECRET");
-
 const router = express.Router();
+
 // @route   GET api/auth
 // @desc    Test route
 // @access  public (token not required)
 router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user).select("-password");
+    const user = await User.findById(req.user.id).select("-password");
     res.send(user);
   } catch (error) {
     res.status(500).send("Server error");
@@ -55,9 +55,11 @@ router.post(
       }
       //return jwt
       const payload = {
-        user: user.id,
+        user: {
+          id: user.id,
+        },
       };
-      jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (error, token) => {
+      jwt.sign(payload, JWT_SECRET, { expiresIn: 360000 }, (error, token) => {
         if (error) {
           throw error;
         }
