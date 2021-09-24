@@ -39,7 +39,13 @@ router.put("/", auth, async (req, res) => {
   const profileFields = {};
   if (name) profileFields.name = name;
   if (picture) profileFields.picture = picture;
-  if (bio) profileFields.bio = bio;
+  if (bio) {
+    if (bio.length <= 120) {
+      profileFields.bio = bio;
+    } else {
+      return res.status(400).send("Bio can be maximum 120 characters long");
+    }
+  }
   if (password) {
     if (password.length >= 6) {
       profileFields.password = await encryptPassword(password);

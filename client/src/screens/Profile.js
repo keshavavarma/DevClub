@@ -10,7 +10,7 @@ const Profile = () => {
         <div className={styles.profileBio}>
           <p className={styles.userName}>Keshava Varma</p>
           <p className={styles.userBio}>
-            I am a Web Developer and Football Addict
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           </p>
           <div className={styles.profileConnections}>
             <p>

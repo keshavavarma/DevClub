@@ -1,0 +1,66 @@
+.card {
+  margin: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.2rem;
+  background-color: white;
+}
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+}
+.createPost {
+  padding: 1rem;
+  max-width: 25rem;
+}
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 20rem;
+  min-height: 15rem;
+}
+.imgContainer img {
+  max-width: 20rem;
+  max-height: 15rem;
+}
+.addCaption {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+}
+.addCaption input {
+  padding: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 300;
+  width: 100%;
+  border: none;
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.addCaption button {
+  margin: 0 0.3rem;
+}
+@media (min-width: 600px) {
+  .createPost {
+    padding: 1rem;
+    max-width: 45rem;
+  }
+  .imgContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 30rem;
+    min-height: 35rem;
+  }
+  .imgContainer img {
+    max-width: 30rem;
+    max-height: 35rem;
+  }
+}

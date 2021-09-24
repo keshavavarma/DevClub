@@ -16,3 +16,10 @@ a {
 li {
   list-style: none;
 }
+button {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.2rem;
+  padding: 0.2em 0.5em;
+  cursor: pointer;
+}

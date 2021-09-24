@@ -1,10 +1,11 @@
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Profile from "./components/Profile";
+import Home from "./screens/Home";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
+import Profile from "./screens/Profile";
+import CreatePost from "./screens/CreatePost";
 function App() {
   return (
     <div className="App">
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route exact path="/Profile">
           <Profile />
+        </Route>
+        <Route exact path="/CreatePost">
+          <CreatePost />
         </Route>
       </Router>
     </div>
