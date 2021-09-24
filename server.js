@@ -26,4 +26,6 @@ app.use("/api/profile", profileRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postsRouter);
 
-app.listen(PORT, () => console.log(`Server started at port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server started at http://localhost:${PORT}`)
+);

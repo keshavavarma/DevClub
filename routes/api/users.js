@@ -36,18 +36,18 @@ router.post(
           .json({ errors: [{ msg: "User already exits" }] });
       }
       //get user's gravatar
-      const avatar = gravatar.url(email, {
-        s: "200",
-        r: "pg",
-        d: "mm",
-      });
+      // const avatar = gravatar.url(email, {
+      //   s: "200",
+      //   r: "pg",
+      //   d: "mm",
+      // });
 
       // create user instance
       user = new User({
         name,
         email,
         password,
-        avatar,
+        // avatar,
       });
       // encrypt password
       const salt = await bcrypt.genSalt(10);
@@ -55,9 +55,11 @@ router.post(
       await user.save();
       //return jwt
       const payload = {
-        user: user.id,
+        user: {
+          id: user.id,
+        },
       };
-      jwt.sign(payload, JWT_SECRET, { expiresIn: 3600 }, (error, token) => {
+      jwt.sign(payload, JWT_SECRET, { expiresIn: 360000 }, (error, token) => {
         if (error) {
           throw error;
         }

@@ -17,6 +17,7 @@ module.exports = function (req, res, next) {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded.user;
+    // TODO: remove later
     console.log("In Auth middleware,this is req.user =", req.user);
     next();
   } catch (error) {
