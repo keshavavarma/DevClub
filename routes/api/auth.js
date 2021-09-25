@@ -4,9 +4,9 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
-const config = require("config");
+const config = require("../../config/config");
 
-const JWT_SECRET = config.get("JWT_SECRET");
+const JWT_SECRET = config.JWT_SECRET;
 const router = express.Router();
 
 // @route   GET api/auth

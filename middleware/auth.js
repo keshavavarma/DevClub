@@ -1,16 +1,14 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
+const config = require("../config/config");
 
-const JWT_SECRET = config.get("JWT_SECRET");
+const JWT_SECRET = config.JWT_SECRET;
 
 module.exports = function (req, res, next) {
   // get the token
   const token = req.header("x-auth-token");
   // check if token is present
   if (!token) {
-    res
-      .status(401)
-      .json({ errors: [{ msg: "No token, authorization denied" }] });
+    res.status(401).json("No token, authorization denied");
   }
 
   // verify token
@@ -21,6 +19,6 @@ module.exports = function (req, res, next) {
     console.log("In Auth middleware,this is req.user =", req.user);
     next();
   } catch (error) {
-    res.status(401).json({ errors: [{ msg: "Invalid Token" }] });
+    res.status(401).json("Invalid Token");
   }
 };

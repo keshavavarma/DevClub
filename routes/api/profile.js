@@ -1,7 +1,7 @@
 const express = require("express");
 const auth = require("../../middleware/auth");
 const axios = require("axios");
-const config = require("config");
+const config = require("../../config/config");
 const bcrypt = require("bcryptjs");
 const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
