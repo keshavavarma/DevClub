@@ -6,6 +6,7 @@ import Login from "./screens/Login";
 import Register from "./screens/Register";
 import Profile from "./screens/Profile";
 import CreatePost from "./screens/CreatePost";
+import EditProfile from "./screens/EditProfile";
 function App() {
   return (
     <div className="App">
@@ -25,6 +26,9 @@ function App() {
         </Route>
         <Route exact path="/CreatePost">
           <CreatePost />
+        </Route>
+        <Route exact path="/EditProfile">
+          <EditProfile />
         </Route>
       </Router>
     </div>

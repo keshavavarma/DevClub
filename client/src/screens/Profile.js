@@ -9,6 +9,9 @@ const Profile = () => {
     clearToken();
     history.push("/Login");
   };
+  const editHandler = () => {
+    history.push("/EditProfile");
+  };
   return (
     <div className={`${styles.profile} ${styles.container}`}>
       <div className={styles.profileInfo}>
@@ -32,7 +35,9 @@ const Profile = () => {
             </p>
           </div>
           <div className={styles.profileActions}>
-            <button className="edit">Edit</button>
+            <button className="edit" onClick={editHandler}>
+              Edit
+            </button>
             <button className="logout" onClick={logoutHandler}>
               Logout
             </button>

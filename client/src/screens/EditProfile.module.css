@@ -1,0 +1,56 @@
+.card {
+  margin: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.2rem;
+  background-color: white;
+}
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+}
+.loginForm {
+  background-color: white;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.2rem;
+  max-width: 25rem;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+}
+.loginForm h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.loginForm label {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.inputField {
+  padding: 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 300;
+  width: 100%;
+  border: none;
+  background-color: white;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+}
+.inputField:focus {
+  border-bottom: 1.5px solid rgb(0, 119, 255);
+}
+.button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgb(0, 119, 255);
+  color: white;
+  font-size: 1.1rem;
+}
