@@ -24,16 +24,18 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res
+        .status(400)
+        .json(
+          "All Fields are required and password length should be 6 or more characters"
+        );
     }
     const { name, email, password } = req.body;
     try {
       // check if user already registered
       let user = await User.findOne({ email: email });
       if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "User already exits" }] });
+        return res.status(400).json("User already exits");
       }
       //get user's gravatar
       // const avatar = gravatar.url(email, {
@@ -63,7 +65,7 @@ router.post(
         if (error) {
           throw error;
         }
-        res.json({ token });
+        res.json(token);
       });
     } catch (error) {
       console.log(error.message);

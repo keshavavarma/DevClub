@@ -4,6 +4,7 @@ const userRouter = require("./routes/api/users");
 const authRouter = require("./routes/api/auth");
 const profileRouter = require("./routes/api/profile");
 const postsRouter = require("./routes/api/posts");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Middleware
-
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {

@@ -1,6 +1,14 @@
 import styles from "./Profile.module.css";
 import profile from "../images/profile.jpeg";
+import { clearToken } from "../util";
+import { useHistory } from "react-router-dom";
+// import { useEffect } from "react";
 const Profile = () => {
+  const history = useHistory();
+  const logoutHandler = () => {
+    clearToken();
+    history.push("/Login");
+  };
   return (
     <div className={`${styles.profile} ${styles.container}`}>
       <div className={styles.profileInfo}>
@@ -25,7 +33,9 @@ const Profile = () => {
           </div>
           <div className={styles.profileActions}>
             <button className="edit">Edit</button>
-            <button className="logout">Logout</button>
+            <button className="logout" onClick={logoutHandler}>
+              Logout
+            </button>
           </div>
         </div>
       </div>

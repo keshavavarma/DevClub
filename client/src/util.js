@@ -1,29 +1,14 @@
-export const setUserInfo = ({
-  _id = "",
-  name = "",
-  email = "",
-  token = "",
-  isAdmin = false,
-}) => {
-  localStorage.setItem(
-    "userInfo",
-    JSON.stringify({
-      _id,
-      name,
-      email,
-      token,
-      isAdmin,
-    })
-  );
+export const setToken = (token) => {
+  sessionStorage.setItem("token", JSON.stringify(token));
 };
 
-export const getUserInfo = () => {
-  const userInfo = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo"))
+export const getToken = () => {
+  const token = sessionStorage.getItem("token")
+    ? JSON.parse(sessionStorage.getItem("token"))
     : {};
-  return userInfo;
+  return token;
 };
 
-export const clearUserInfo = () => {
-  localStorage.removeItem("userInfo");
+export const clearToken = () => {
+  sessionStorage.removeItem("token");
 };
