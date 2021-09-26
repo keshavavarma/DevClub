@@ -83,12 +83,15 @@ const CreatePost = () => {
           </Alert>
         )}
         <div className={styles.imgContainer}>
-          <input
-            type="file"
-            accept=".jpeg,.jpg,.png"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-          {/* <img src="images/homer.jpg" alt="post image" /> */}
+          {url ? (
+            <img src={url} alt="post" />
+          ) : (
+            <input
+              type="file"
+              accept=".jpeg,.jpg,.png"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          )}
         </div>
         <div className={styles.addCaption}>
           <input

@@ -73,3 +73,99 @@ export const createPost = async ({ picture, caption }) => {
     return { error: err };
   }
 };
+
+// Profile
+
+export const getMyProfile = async () => {
+  const token = getToken();
+  try {
+    const response = await fetch("/api/profile/me", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        "x-auth-token": `${token}`,
+      },
+    });
+    if (!response || !response.ok) {
+      const error = await response.json();
+      throw new Error(error);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    return { error: err };
+  }
+};
+
+export const updateProfile = async ({ name, password, bio, picture }) => {
+  const token = getToken();
+  try {
+    const response = await fetch("/api/profile", {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        "x-auth-token": `${token}`,
+      },
+      body: JSON.stringify({
+        picture,
+        name,
+        password,
+        bio,
+      }),
+    });
+    if (!response || !response.ok) {
+      const error = await response.json();
+      throw new Error(error);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    return { error: err };
+  }
+};
+
+// Posts
+
+export const getAllPosts = async () => {
+  try {
+    const response = await fetch("/api/posts/", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    if (!response || !response.ok) {
+      const error = await response.json();
+      throw new Error(error);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    return { error: err };
+  }
+};
+
+export const getMyPosts = async () => {
+  const token = getToken();
+  try {
+    const response = await fetch("/api/posts/me", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        "x-auth-token": `${token}`,
+      },
+    });
+    if (!response || !response.ok) {
+      const error = await response.json();
+      throw new Error(error);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    return { error: err };
+  }
+};

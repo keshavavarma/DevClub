@@ -4,6 +4,7 @@ const axios = require("axios");
 const config = require("../../config/config");
 const bcrypt = require("bcryptjs");
 const User = require("../../models/User");
+const Post = require("../../models/Post");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get("/me", auth, async (req, res) => {
     const profile = await User.findById(req.user.id).select("-password");
     console.log("/me", req.user.id);
     if (!profile) {
-      return res.status(400).json({ msg: "Profile is not available" });
+      return res.status(400).json("Profile is not available");
     }
     res.json(profile);
   } catch (err) {
@@ -109,8 +110,9 @@ router.get("/user/:user_id", async (req, res) => {
 router.delete("/", auth, async (req, res) => {
   try {
     // TODO: Delete posts
+    await Post.deleteMany({ user: req.user.id });
     await User.findOneAndRemove({ _id: req.user.id });
-    res.json({ msg: "User deleted" });
+    res.json("User deleted");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

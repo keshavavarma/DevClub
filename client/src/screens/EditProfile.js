@@ -1,34 +1,109 @@
 import React from "react";
 import styles from "./EditProfile.module.css";
+import { Alert } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { updateProfile } from "../api";
+
 const EditProfile = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
-  //const [picture, setPicture] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [url, setUrl] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const history = useHistory();
 
   const closeHandler = (e) => {
     if (e.target !== e.currentTarget) return;
     history.push("/Profile");
   };
-  const submitHandler = () => {
-    // Put request to database
+  const uploadPicture = async (e) => {
+    e.preventDefault();
+    console.log(photo);
+    const data = new FormData();
+    data.append("file", photo);
+    data.append("upload_preset", "pixtagram");
+    data.append("cloud_name", "cr7");
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/cr7/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      if (!response || !response.ok) {
+        const error = await response.json();
+        throw new Error("Picture Not Updated");
+      }
+      const output = await response.json();
+      setUrl(output.url);
+      console.log("picture uploaded to cloudinary successfully", output.url);
+      setSuccess("Picture Updated");
+    } catch (err) {
+      setError(err.message);
+      console.log(err.message);
+      //return { error: err };
+    }
   };
-  const uploadPicture = () => {
-    // Put request to database
+
+  useEffect(() => {
+    if (url) {
+      submitHandler();
+    }
+    return console.log("EditProfile clean-up");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
+
+  const submitHandler = async () => {
+    const updatedProfile = await updateProfile({
+      name,
+      password,
+      picture: url,
+      bio,
+    });
+    if (updatedProfile.error) {
+      console.log(updatedProfile.error);
+      setError(updatedProfile.error.message);
+    } else {
+      console.log("Profile Updated Successfully");
+      history.push("/Profile");
+    }
   };
+
   return (
     <div className={styles.modalContainer} onClick={closeHandler}>
       <form className={styles.loginForm}>
+        {error && (
+          <Alert
+            onClose={() => {
+              setError("");
+            }}
+            severity="error"
+          >
+            {error}
+          </Alert>
+        )}
+        {success && (
+          <Alert
+            onClose={() => {
+              setSuccess("");
+            }}
+            severity="success"
+          >
+            {success}
+          </Alert>
+        )}
         <h2>Profile</h2>
         <label>Name</label>
         <input
           value={name}
           className={styles.inputField}
           type="text"
-          required
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -38,7 +113,6 @@ const EditProfile = () => {
           value={bio}
           className={styles.inputField}
           type="text"
-          required
           onChange={(e) => {
             setBio(e.target.value);
           }}
@@ -47,16 +121,39 @@ const EditProfile = () => {
         <input
           className={styles.inputField}
           type="password"
-          required
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
         ></input>
-        <button className={styles.button} onClick={uploadPicture}>
-          Upload Picture
-        </button>
-        <button className={styles.button} onClick={submitHandler}>
+        <label
+          htmlFor="fileUpload"
+          className={styles.fileUploadLabel}
+          role="button"
+        >
+          {fileName ? fileName : "Upload Photo"}
+          <input
+            id="fileUpload"
+            className={styles.fileUpload}
+            type="file"
+            accept=".jpeg,.jpg,.png"
+            onChange={(e) => {
+              if (e.target.files[0] === undefined) {
+                console.log(e.target.files[0], "selected undefined file");
+              } else {
+                console.log(e.target.files[0]);
+                setPhoto(e.target.files[0]);
+                setFileName(e.target.files[0].name);
+              }
+            }}
+          />
+        </label>
+        <button
+          className={styles.button}
+          onClick={(e) => {
+            uploadPicture(e);
+          }}
+        >
           Save
         </button>
       </form>
