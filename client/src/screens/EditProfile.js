@@ -2,10 +2,13 @@ import React from "react";
 import styles from "./EditProfile.module.css";
 import { Alert } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { updateProfile } from "../api";
+import { useState, useEffect, useContext } from "react";
+import { deleteProfile, updateProfile } from "../api";
+import { clearToken } from "../util";
+import { AuthContext } from "../contexts/AuthContext";
 
 const EditProfile = () => {
+  const { isAuth } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
@@ -75,6 +78,19 @@ const EditProfile = () => {
     }
   };
 
+  const deleteHandler = async () => {
+    const deletedMsg = await deleteProfile();
+    if (deletedMsg.error) {
+      console.log(deletedMsg.error.message);
+      setError(deletedMsg.error.message);
+    } else {
+      console.log(deletedMsg);
+      setSuccess(deletedMsg);
+      clearToken();
+      isAuth.current = false;
+      history.push("/Login");
+    }
+  };
   return (
     <div className={styles.modalContainer} onClick={closeHandler}>
       <form className={styles.loginForm}>
@@ -155,6 +171,14 @@ const EditProfile = () => {
           }}
         >
           Save
+        </button>
+        <button
+          className={styles.buttonDelete}
+          onClick={(e) => {
+            deleteHandler();
+          }}
+        >
+          Delete
         </button>
       </form>
     </div>

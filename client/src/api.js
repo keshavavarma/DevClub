@@ -169,3 +169,27 @@ export const getMyPosts = async () => {
     return { error: err };
   }
 };
+
+// Delete User
+
+export const deleteProfile = async () => {
+  const token = getToken();
+  try {
+    const response = await fetch("/api/profile", {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        "x-auth-token": `${token}`,
+      },
+    });
+    if (!response || !response.ok) {
+      const error = await response.json();
+      throw new Error(error);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    return { error: err };
+  }
+};

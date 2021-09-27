@@ -66,3 +66,11 @@
   color: white;
   font-size: 1.1rem;
 }
+.buttonDelete {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgba(255, 0, 0, 0.678);
+  color: white;
+  font-size: 1.1rem;
+}
