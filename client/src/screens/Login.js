@@ -2,10 +2,14 @@ import React from "react";
 import { Alert } from "@mui/material";
 import styles from "./Login.module.css";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { signin } from "../api";
 import { getToken, setToken } from "../util";
+import { AuthContext } from "../contexts/AuthContext";
+
 const Login = () => {
+  const { isAuth } = useContext(AuthContext);
+
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +25,7 @@ const Login = () => {
       console.log("token saved");
       setToken(token);
       console.log(getToken());
+      isAuth.current = true;
       setEmail("");
       setPassword("");
       history.push("/");

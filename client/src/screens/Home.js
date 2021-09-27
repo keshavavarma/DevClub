@@ -9,7 +9,7 @@ import { getAllPosts } from "../api";
 const Home = () => {
   const [like, setLike] = useState(false);
   const [feed, setFeed] = useState([]);
-
+  console.log("In Home.js");
   const history = useHistory();
   const createHandler = () => {
     history.push("/CreatePost");

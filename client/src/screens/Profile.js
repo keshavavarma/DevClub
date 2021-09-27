@@ -2,10 +2,13 @@ import styles from "./Profile.module.css";
 // import profile from "../images/profile.jpeg";
 import { clearToken } from "../util";
 import { Link, useHistory } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getMyPosts, getMyProfile } from "../api";
 
+import { AuthContext } from "../contexts/AuthContext";
+
 const Profile = () => {
+  const { isAuth } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [photo, setPhoto] = useState("");
@@ -14,6 +17,7 @@ const Profile = () => {
   const history = useHistory();
   const logoutHandler = () => {
     clearToken();
+    isAuth.current = false;
     history.push("/Login");
   };
 
