@@ -1,47 +1,51 @@
 import styles from "./Profile.module.css";
-// import profile from "../images/profile.jpeg";
-import { clearToken } from "../util";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams, Redirect } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { getMyPosts, getMyProfile } from "../api";
+import { getPostsByID, getProfileByID } from "../api";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-const Profile = () => {
+const OthersProfile = () => {
   const { isAuth } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [photo, setPhoto] = useState("");
   const [posts, setPosts] = useState([]);
+  const [follow, setFollow] = useState(false);
+
+  const { userID } = useParams();
 
   const history = useHistory();
-  const logoutHandler = () => {
-    clearToken();
-    isAuth.current = false;
-    history.push("/Login");
+
+  const followHandler = () => {
+    // follow logic
   };
 
-  const editHandler = () => {
-    history.push("/EditProfile");
+  const unfollowHandler = () => {
+    // unfollow logic
   };
+
   const profileDetails = async () => {
-    const profile = await getMyProfile();
+    const profile = await getProfileByID(userID);
     setName(profile.name);
     setBio(profile.bio);
     setPhoto(profile.picture);
   };
-  const myPosts = async () => {
-    const posts = await getMyPosts();
+  const userPosts = async () => {
+    const posts = await getPostsByID(userID);
     setPosts(posts);
     console.log(posts.length);
   };
+
+  console.log("isAuth in OthersProfile.js", isAuth.current);
+
   useEffect(() => {
     profileDetails();
-    myPosts();
-    return console.log("Profile cleanup done");
+    userPosts();
+    return console.log("OthersProfile cleanup done");
   }, []);
 
-  return (
+  return isAuth ? (
     <div className={`${styles.profile} ${styles.container}`}>
       <div className={styles.profileInfo}>
         <div className={styles.imgContainer}>
@@ -62,12 +66,27 @@ const Profile = () => {
             </p>
           </div>
           <div className={styles.profileActions}>
-            <button className="edit" onClick={editHandler}>
-              Edit
-            </button>
-            <button className="logout" onClick={logoutHandler}>
-              Logout
-            </button>
+            {follow ? (
+              <button
+                className="edit"
+                onClick={() => {
+                  unfollowHandler();
+                  setFollow(!follow);
+                }}
+              >
+                Unfollow
+              </button>
+            ) : (
+              <button
+                className="edit"
+                onClick={() => {
+                  followHandler();
+                  setFollow(!follow);
+                }}
+              >
+                Follow
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -84,13 +103,7 @@ const Profile = () => {
             ? posts.map((post) => {
                 return (
                   <li key={post._id}>
-                    <img
-                      src={post.picture}
-                      alt="post"
-                      onClick={(e) => {
-                        history.push(`ViewPost/${post._id}`);
-                      }}
-                    />
+                    <img src={post.picture} alt="post" />
                   </li>
                 );
               })
@@ -98,7 +111,9 @@ const Profile = () => {
         </ul>
       </div>
     </div>
+  ) : (
+    <Redirect to="/Profile"></Redirect>
   );
 };
 
-export default Profile;
+export default OthersProfile;

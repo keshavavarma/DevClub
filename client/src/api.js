@@ -98,6 +98,26 @@ export const getMyProfile = async () => {
   }
 };
 
+export const getProfileByID = async (userID) => {
+  try {
+    const response = await fetch(`/api/profile/user/${userID}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    if (!response || !response.ok) {
+      const error = await response.json();
+      throw new Error(error);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    return { error: err };
+  }
+};
+
 export const updateProfile = async ({ name, password, bio, picture }) => {
   const token = getToken();
   try {
@@ -156,6 +176,26 @@ export const getMyPosts = async () => {
       headers: {
         "content-type": "application/json",
         "x-auth-token": `${token}`,
+      },
+    });
+    if (!response || !response.ok) {
+      const error = await response.json();
+      throw new Error(error);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    return { error: err };
+  }
+};
+
+export const getPostsByID = async (userID) => {
+  try {
+    const response = await fetch(`/api/posts/${userID}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
       },
     });
     if (!response || !response.ok) {

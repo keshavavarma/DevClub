@@ -7,10 +7,12 @@ import Register from "./screens/Register";
 import Profile from "./screens/Profile";
 import CreatePost from "./screens/CreatePost";
 import EditProfile from "./screens/EditProfile";
+import OthersProfile from "./screens/OthersProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContext } from "./contexts/AuthContext";
 import { useEffect, useRef } from "react";
 import { getToken } from "./util";
+import ViewPost from "./screens/ViewPost";
 function App() {
   const isAuth = useRef(false);
   const token = useRef({});
@@ -24,7 +26,7 @@ function App() {
       isAuth.current = false;
     }
   });
-
+  console.log("isAuth in App.js", isAuth.current);
   return (
     <div className="App">
       <Router>
@@ -38,9 +40,15 @@ function App() {
             <ProtectedRoute path="/CreatePost">
               <CreatePost />
             </ProtectedRoute>
+            <ProtectedRoute path="/ViewPost/:postID">
+              <ViewPost />
+            </ProtectedRoute>
             <ProtectedRoute path="/EditProfile">
               <EditProfile />
             </ProtectedRoute>
+            <Route path="/user/:userID">
+              <OthersProfile />
+            </Route>
             <Route path="/Login">
               <Login />
             </Route>
