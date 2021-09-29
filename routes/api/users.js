@@ -5,6 +5,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/config");
+const auth = require("../../middleware/auth");
 
 const JWT_SECRET = config.JWT_SECRET;
 const router = express.Router();
@@ -73,5 +74,75 @@ router.post(
     }
   }
 );
+
+// @route   PUT api/users/follow
+// @desc    follow User
+// @access  Private
+
+router.put("/follow", auth, async (req, res) => {
+  try {
+    const followed = await User.findByIdAndUpdate(
+      req.body.followID,
+      {
+        $push: { followers: req.user.id },
+      },
+      {
+        new: true,
+      }
+    );
+    const following = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $push: { following: req.body.followID },
+      },
+      {
+        new: true,
+      }
+    );
+    const response = {
+      followed,
+      following,
+    };
+    res.json(response);
+  } catch (error) {
+    console.log(error.message);
+    res.json(500).json("Server error");
+  }
+});
+
+// @route   PUT api/users/unfollow
+// @desc    unfollow User
+// @access  Private
+
+router.put("/unfollow", auth, async (req, res) => {
+  try {
+    const unfollowed = await User.findByIdAndUpdate(
+      req.body.followID,
+      {
+        $pull: { followers: req.user.id },
+      },
+      {
+        new: true,
+      }
+    );
+    const unfollowing = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $pull: { following: req.body.followID },
+      },
+      {
+        new: true,
+      }
+    );
+    const response = {
+      unfollowed,
+      unfollowing,
+    };
+    res.json(response);
+  } catch (error) {
+    console.log(error.message);
+    res.json(500).json("Server error");
+  }
+});
 
 module.exports = router;

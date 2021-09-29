@@ -81,4 +81,69 @@ router.get("/:user_id", async (req, res) => {
   }
 });
 
+// like post
+
+router.put("/like", auth, async (req, res) => {
+  try {
+    const liked = await Post.findByIdAndUpdate(
+      req.body.postID,
+      {
+        $push: { likes: req.user.id },
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(liked);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json("Server error");
+  }
+});
+
+// unlike post
+
+router.put("/unlike", auth, async (req, res) => {
+  try {
+    const unliked = await Post.findByIdAndUpdate(
+      req.body.postID,
+      {
+        $pull: { likes: req.user.id },
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(unliked);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json("Server error");
+  }
+});
+
+// comment on post
+
+router.put("/comment", auth, async (req, res) => {
+  try {
+    const comment = await Post.findByIdAndUpdate(
+      req.body.postID,
+      {
+        $push: {
+          comments: {
+            text: req.body.text,
+            postedBy: req.user.id,
+          },
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(comment);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json("Server error");
+  }
+});
+
 module.exports = router;
