@@ -1,32 +1,48 @@
 import styles from "./Profile.module.css";
 import { Link, useHistory, useParams, Redirect } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-import { getPostsByID, getProfileByID } from "../api";
+import { useState, useEffect, useContext, useRef } from "react";
+import {
+  followUser,
+  getAuthUser,
+  getPostsByID,
+  getProfileByID,
+  unfollowUser,
+} from "../api";
 
 import { AuthContext } from "../contexts/AuthContext";
 
 const OthersProfile = () => {
   const { isAuth } = useContext(AuthContext);
+  const loggedinUser = useRef({});
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [photo, setPhoto] = useState("");
   const [posts, setPosts] = useState([]);
-  const [follow, setFollow] = useState(false);
-
+  const [followers, setFollowers] = useState([]);
+  const [render, setRender] = useState(false);
   const { userID } = useParams();
 
   const history = useHistory();
 
-  const followHandler = () => {
-    // follow logic
+  const getCurrentUser = async () => {
+    loggedinUser.current = await getAuthUser();
   };
 
-  const unfollowHandler = () => {
+  const followHandler = async (followID) => {
+    // follow logic
+    const profile = await followUser(followID);
+    setRender(!render);
+  };
+
+  const unfollowHandler = async (followID) => {
     // unfollow logic
+    await unfollowUser(followID);
+    setRender(!render);
   };
 
   const profileDetails = async () => {
     const profile = await getProfileByID(userID);
+    setFollowers(profile.followers);
     setName(profile.name);
     setBio(profile.bio);
     setPhoto(profile.picture);
@@ -37,15 +53,14 @@ const OthersProfile = () => {
     console.log(posts.length);
   };
 
-  console.log("isAuth in OthersProfile.js", isAuth.current);
-
   useEffect(() => {
+    getCurrentUser();
     profileDetails();
     userPosts();
     return console.log("OthersProfile cleanup done");
-  }, []);
+  }, [render]);
 
-  return isAuth ? (
+  return (
     <div className={`${styles.profile} ${styles.container}`}>
       <div className={styles.profileInfo}>
         <div className={styles.imgContainer}>
@@ -66,12 +81,12 @@ const OthersProfile = () => {
             </p>
           </div>
           <div className={styles.profileActions}>
-            {follow ? (
+            {followers.filter((id) => id === loggedinUser.current._id)
+              .length !== 0 ? (
               <button
                 className="edit"
                 onClick={() => {
-                  unfollowHandler();
-                  setFollow(!follow);
+                  unfollowHandler(userID);
                 }}
               >
                 Unfollow
@@ -80,8 +95,7 @@ const OthersProfile = () => {
               <button
                 className="edit"
                 onClick={() => {
-                  followHandler();
-                  setFollow(!follow);
+                  followHandler(userID);
                 }}
               >
                 Follow
@@ -111,8 +125,6 @@ const OthersProfile = () => {
         </ul>
       </div>
     </div>
-  ) : (
-    <Redirect to="/Profile"></Redirect>
   );
 };
 

@@ -10,8 +10,8 @@ const JWT_SECRET = config.JWT_SECRET;
 const router = express.Router();
 
 // @route   GET api/auth
-// @desc    Test route
-// @access  public (token not required)
+// @desc    get logged-in user
+// @access  private
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");

@@ -99,11 +99,7 @@ router.put("/follow", auth, async (req, res) => {
         new: true,
       }
     );
-    const response = {
-      followed,
-      following,
-    };
-    res.json(response);
+    res.json(followed);
   } catch (error) {
     console.log(error.message);
     res.json(500).json("Server error");
@@ -134,11 +130,7 @@ router.put("/unfollow", auth, async (req, res) => {
         new: true,
       }
     );
-    const response = {
-      unfollowed,
-      unfollowing,
-    };
-    res.json(response);
+    res.json(unfollowed);
   } catch (error) {
     console.log(error.message);
     res.json(500).json("Server error");

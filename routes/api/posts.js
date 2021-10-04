@@ -81,6 +81,24 @@ router.get("/:user_id", async (req, res) => {
   }
 });
 
+// Get post by post_id
+
+router.get("/post/:post_id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.post_id).populate("user", [
+      "name",
+      "picture",
+    ]);
+    if (!post) {
+      return res.status(400).json("Post not found");
+    }
+    res.json(post);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json("Server error");
+  }
+});
+
 // like post
 
 router.put("/like", auth, async (req, res) => {

@@ -1,13 +1,13 @@
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import styles from "./Home.module.css";
-import profile from "../images/profile.jpeg";
 import { useHistory } from "react-router-dom";
-import { getAllPosts } from "../api";
+import { getAllPosts, getAuthUser, likePost, unlikePost } from "../api";
 import { AuthContext } from "../contexts/AuthContext";
 
 const Home = () => {
+  const user = useRef({});
   const { isAuth } = useContext(AuthContext);
   const [like, setLike] = useState(false);
   const [feed, setFeed] = useState([]);
@@ -16,7 +16,15 @@ const Home = () => {
   const createHandler = () => {
     history.push("/CreatePost");
   };
-  const likeHandler = () => {
+  const getCurrentUser = async () => {
+    user.current = await getAuthUser();
+  };
+  const likeHandler = async (postID) => {
+    const post = await likePost(postID);
+    setLike(!like);
+  };
+  const unlikeHandler = async (postID) => {
+    const post = await unlikePost(postID);
     setLike(!like);
   };
 
@@ -26,9 +34,10 @@ const Home = () => {
     setFeed(feed);
   };
   useEffect(() => {
+    getCurrentUser();
     homeFeed();
     return console.log("HomePage cleanup done");
-  }, []);
+  }, [like]);
 
   return (
     <div className={`${styles.feed} ${styles.container}`}>
@@ -42,7 +51,11 @@ const Home = () => {
               <div
                 className={styles.userInfo}
                 onClick={(e) => {
-                  history.push(`user/${post.user._id}`);
+                  if (post.user._id === user.current._id) {
+                    history.push("/Profile");
+                  } else {
+                    history.push(`user/${post.user._id}`);
+                  }
                 }}
               >
                 <img src={post.user.picture} alt=" profile" />
@@ -57,16 +70,30 @@ const Home = () => {
                 <img src={post.picture} alt="post" />
               </div>
               <div className={styles.feedPostActions}>
-                {like ? (
-                  <button className="likes" onClick={likeHandler}>
+                <button
+                  className="likes"
+                  onClick={() => {
+                    if (
+                      post.likes.filter((id) => id === user.current._id)
+                        .length !== 0
+                    ) {
+                      unlikeHandler(post._id);
+                    } else {
+                      likeHandler(post._id);
+                    }
+                  }}
+                >
+                  {post.likes.filter((id) => id === user.current._id).length !==
+                  0 ? (
                     <FavoriteIcon sx={{ color: "red" }} fontSize="large" />
-                  </button>
-                ) : (
-                  <button className="likes" onClick={likeHandler}>
+                  ) : (
                     <FavoriteBorderOutlinedIcon fontSize="large" />
-                  </button>
-                )}
-                <span>10 likes</span>
+                  )}
+                </button>
+                <span>
+                  {post.likes.length}{" "}
+                  {post.likes.length === 1 ? "like" : "likes"}
+                </span>
               </div>
             </div>
           );

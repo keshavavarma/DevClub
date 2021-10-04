@@ -12,3 +12,7 @@ export const getToken = () => {
 export const clearToken = () => {
   sessionStorage.removeItem("token");
 };
+
+export function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
