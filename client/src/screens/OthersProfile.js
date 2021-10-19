@@ -21,6 +21,7 @@ const OthersProfile = () => {
   const [photo, setPhoto] = useState("");
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
   const [render, setRender] = useState(false);
   const { userID } = useParams();
 
@@ -45,6 +46,7 @@ const OthersProfile = () => {
   const profileDetails = async () => {
     const profile = await getProfileByID(userID);
     setFollowers(profile.followers);
+    setFollowing(profile.following);
     setName(profile.name);
     setBio(profile.bio);
     setPhoto(profile.picture);
@@ -87,13 +89,13 @@ const OthersProfile = () => {
             <p className={styles.userBio}>{bio}</p>
             <div className={styles.profileConnections}>
               <p>
-                Posts <span>6</span>
+                Posts <span>{posts.length}</span>
               </p>
               <p>
-                followers <span>200</span>
+                followers <span>{followers && followers.length}</span>
               </p>
               <p>
-                following <span>150</span>
+                following <span>{following && following.length}</span>
               </p>
             </div>
             <div className={styles.profileActions}>

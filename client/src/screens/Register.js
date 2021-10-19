@@ -5,9 +5,9 @@ import { Alert } from "@mui/material";
 import { useState } from "react";
 import { register } from "../api";
 import { getToken, setToken } from "../util";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 const Register = () => {
-  //const history = useHistory();
+  const history = useHistory();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,10 +23,11 @@ const Register = () => {
       console.log("token saved");
       setToken(token);
       console.log(getToken());
-      setSuccess("You have successfully Registered");
+      setSuccess("You have successfully Registered,Please login");
       setName("");
       setEmail("");
       setPassword("");
+      // history.push("/");
     }
   };
   return (

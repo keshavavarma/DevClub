@@ -14,7 +14,8 @@ const Profile = () => {
   const [bio, setBio] = useState("");
   const [photo, setPhoto] = useState("");
   const [posts, setPosts] = useState([]);
-
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
   const history = useHistory();
   const logoutHandler = () => {
     clearToken();
@@ -27,6 +28,9 @@ const Profile = () => {
   };
   const profileDetails = async () => {
     const profile = await getMyProfile();
+    setFollowers(profile.followers);
+    setFollowing(profile.following);
+    console.log("profile", profile);
     setName(profile.name);
     setBio(profile.bio);
     setPhoto(profile.picture);
@@ -70,13 +74,13 @@ const Profile = () => {
             <p className={styles.userBio}>{bio}</p>
             <div className={styles.profileConnections}>
               <p>
-                Posts <span>6</span>
+                Posts <span>{posts.length}</span>
               </p>
               <p>
-                followers <span>200</span>
+                followers <span>{followers && followers.length}</span>
               </p>
               <p>
-                following <span>150</span>
+                following <span>{following && following.length}</span>
               </p>
             </div>
             <div className={styles.profileActions}>
