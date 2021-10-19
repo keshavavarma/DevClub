@@ -10,6 +10,8 @@ import {
 } from "../api";
 
 import { AuthContext } from "../contexts/AuthContext";
+import { Avatar } from "@mui/material";
+import Navbar from "../components/Navbar";
 
 const OthersProfile = () => {
   const { isAuth } = useContext(AuthContext);
@@ -61,70 +63,85 @@ const OthersProfile = () => {
   }, [render]);
 
   return (
-    <div className={`${styles.profile} ${styles.container}`}>
-      <div className={styles.profileInfo}>
-        <div className={styles.imgContainer}>
-          <img src={photo} alt="profile " />
+    <>
+      <Navbar />
+      <div className={`${styles.profile} ${styles.container}`}>
+        <div className={styles.profileInfo}>
+          <Avatar
+            src={
+              isAuth.current &&
+              (photo
+                ? photo
+                : `https://avatars.dicebear.com/api/initials/${name}.svg`)
+            }
+            className="avatar"
+            style={{
+              height: "200px",
+              width: "200px",
+              marginRight: "1rem",
+              position: "static",
+            }}
+          />
+          <div className={styles.profileBio}>
+            <p className={styles.userName}>{name}</p>
+            <p className={styles.userBio}>{bio}</p>
+            <div className={styles.profileConnections}>
+              <p>
+                Posts <span>6</span>
+              </p>
+              <p>
+                followers <span>200</span>
+              </p>
+              <p>
+                following <span>150</span>
+              </p>
+            </div>
+            <div className={styles.profileActions}>
+              {followers.filter((id) => id === loggedinUser.current._id)
+                .length !== 0 ? (
+                <button
+                  className="edit"
+                  onClick={() => {
+                    unfollowHandler(userID);
+                  }}
+                >
+                  Unfollow
+                </button>
+              ) : (
+                <button
+                  className="edit"
+                  onClick={() => {
+                    followHandler(userID);
+                  }}
+                >
+                  Follow
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-        <div className={styles.profileBio}>
-          <p className={styles.userName}>{name}</p>
-          <p className={styles.userBio}>{bio}</p>
-          <div className={styles.profileConnections}>
-            <p>
-              Posts <span>6</span>
-            </p>
-            <p>
-              followers <span>200</span>
-            </p>
-            <p>
-              following <span>150</span>
-            </p>
-          </div>
-          <div className={styles.profileActions}>
-            {followers.filter((id) => id === loggedinUser.current._id)
-              .length !== 0 ? (
-              <button
-                className="edit"
-                onClick={() => {
-                  unfollowHandler(userID);
-                }}
-              >
-                Unfollow
-              </button>
-            ) : (
-              <button
-                className="edit"
-                onClick={() => {
-                  followHandler(userID);
-                }}
-              >
-                Follow
-              </button>
-            )}
-          </div>
+        <div className={styles.profilePosts}>
+          {posts.length !== 0 ? (
+            <h3>Posts</h3>
+          ) : (
+            <h3>
+              No Posts Available,<Link to="/CreatePost">Create Post?</Link>
+            </h3>
+          )}
+          <ul className={styles.profilePostContainer}>
+            {posts.length !== 0
+              ? posts.map((post) => {
+                  return (
+                    <li key={post._id}>
+                      <img src={post.picture} alt="post" />
+                    </li>
+                  );
+                })
+              : ""}
+          </ul>
         </div>
       </div>
-      <div className={styles.profilePosts}>
-        {posts.length !== 0 ? (
-          <h3>Posts</h3>
-        ) : (
-          <h3>
-            No Posts Available,<Link to="/CreatePost">Create Post?</Link>
-          </h3>
-        )}
-        <ul className={styles.profilePostContainer}>
-          {posts.length !== 0
-            ? posts.map((post) => {
-                return (
-                  <li key={post._id}>
-                    <img src={post.picture} alt="post" />
-                  </li>
-                );
-              })
-            : ""}
-        </ul>
-      </div>
-    </div>
+    </>
   );
 };
 

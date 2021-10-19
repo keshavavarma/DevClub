@@ -5,6 +5,7 @@ import { Alert } from "@mui/material";
 import { useState } from "react";
 import { register } from "../api";
 import { getToken, setToken } from "../util";
+import { Link } from "react-router-dom";
 const Register = () => {
   //const history = useHistory();
   const [name, setName] = useState("");
@@ -85,6 +86,9 @@ const Register = () => {
         <button className={styles.button} onClick={submitHandler}>
           Register
         </button>
+        <p className={styles.link}>
+          Have an Account? <Link to="/Login">Sign-In</Link>
+        </p>
       </form>
     </div>
   );

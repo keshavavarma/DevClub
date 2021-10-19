@@ -22,6 +22,11 @@
   font-size: 1.1rem;
   margin-bottom: 1rem;
 }
+.loginForm > .link {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
 .inputField {
   padding: 0.5rem;
   outline: none;

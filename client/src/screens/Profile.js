@@ -1,11 +1,12 @@
 import styles from "./Profile.module.css";
-// import profile from "../images/profile.jpeg";
 import { clearToken } from "../util";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { getMyPosts, getMyProfile } from "../api";
 
 import { AuthContext } from "../contexts/AuthContext";
+import Navbar from "../components/Navbar";
+import { Avatar } from "@mui/material";
 
 const Profile = () => {
   const { isAuth } = useContext(AuthContext);
@@ -42,62 +43,80 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className={`${styles.profile} ${styles.container}`}>
-      <div className={styles.profileInfo}>
-        <div className={styles.imgContainer}>
-          <img src={photo} alt="profile " />
+    <>
+      <Navbar />
+      <div className={`${styles.profile} ${styles.container}`}>
+        <div className={styles.profileInfo}>
+          {/* <div className={styles.imgContainerProfile}>
+            <img src={photo} alt="profile " />
+          </div> */}
+          <Avatar
+            src={
+              isAuth.current &&
+              (photo
+                ? photo
+                : `https://avatars.dicebear.com/api/initials/${name}.svg`)
+            }
+            className="avatar"
+            style={{
+              height: "200px",
+              width: "200px",
+              marginRight: "1rem",
+              position: "static",
+            }}
+          />
+          <div className={styles.profileBio}>
+            <p className={styles.userName}>{name}</p>
+            <p className={styles.userBio}>{bio}</p>
+            <div className={styles.profileConnections}>
+              <p>
+                Posts <span>6</span>
+              </p>
+              <p>
+                followers <span>200</span>
+              </p>
+              <p>
+                following <span>150</span>
+              </p>
+            </div>
+            <div className={styles.profileActions}>
+              <button className="edit" onClick={editHandler}>
+                Edit
+              </button>
+              <button className="logout" onClick={logoutHandler}>
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
-        <div className={styles.profileBio}>
-          <p className={styles.userName}>{name}</p>
-          <p className={styles.userBio}>{bio}</p>
-          <div className={styles.profileConnections}>
-            <p>
-              Posts <span>6</span>
-            </p>
-            <p>
-              followers <span>200</span>
-            </p>
-            <p>
-              following <span>150</span>
-            </p>
-          </div>
-          <div className={styles.profileActions}>
-            <button className="edit" onClick={editHandler}>
-              Edit
-            </button>
-            <button className="logout" onClick={logoutHandler}>
-              Logout
-            </button>
-          </div>
+        <div className={styles.profilePosts}>
+          {posts.length !== 0 ? (
+            <h3>Posts</h3>
+          ) : (
+            <h3>
+              No Posts Available,<Link to="/CreatePost">Create Post?</Link>
+            </h3>
+          )}
+          <ul className={styles.profilePostContainer}>
+            {posts.length !== 0
+              ? posts.map((post) => {
+                  return (
+                    <li key={post._id}>
+                      <img
+                        src={post.picture}
+                        alt="post"
+                        onClick={(e) => {
+                          history.push(`ViewPost/${post._id}`);
+                        }}
+                      />
+                    </li>
+                  );
+                })
+              : ""}
+          </ul>
         </div>
       </div>
-      <div className={styles.profilePosts}>
-        {posts.length !== 0 ? (
-          <h3>Posts</h3>
-        ) : (
-          <h3>
-            No Posts Available,<Link to="/CreatePost">Create Post?</Link>
-          </h3>
-        )}
-        <ul className={styles.profilePostContainer}>
-          {posts.length !== 0
-            ? posts.map((post) => {
-                return (
-                  <li key={post._id}>
-                    <img
-                      src={post.picture}
-                      alt="post"
-                      onClick={(e) => {
-                        history.push(`ViewPost/${post._id}`);
-                      }}
-                    />
-                  </li>
-                );
-              })
-            : ""}
-        </ul>
-      </div>
-    </div>
+    </>
   );
 };
 

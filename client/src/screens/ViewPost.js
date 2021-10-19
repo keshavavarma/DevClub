@@ -8,9 +8,15 @@ const ViewPost = () => {
   const user = useRef({});
   const post = useRef({});
   const [text, setText] = useState("");
+  const [newComment, setNewComment] = useState();
   const [render, setRender] = useState({});
   const history = useHistory();
   const { postID } = useParams();
+  const scrollRef = useRef();
+
+  const scrollToBottom = () => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const closeHandler = (e) => {
     if (e.target !== e.currentTarget) return;
@@ -19,16 +25,22 @@ const ViewPost = () => {
 
   const getPostDetails = async (postID) => {
     post.current = await getPost(postID);
+    console.log("Post Details", post.current);
     setRender(post.current);
   };
 
   const getCurrentUser = async () => {
     user.current = await getAuthUser();
+    console.log("current user", user.current.picture);
   };
 
   const addComment = async () => {
     console.log(text);
-    const addedComment = await comment(text, postID);
+    const newComment = await comment(text, postID, user.current.picture);
+    console.log(newComment);
+    setText("");
+    setNewComment(newComment);
+    scrollToBottom();
   };
 
   console.log(typeof post.current === "object", post.current);
@@ -36,7 +48,7 @@ const ViewPost = () => {
   useEffect(() => {
     getPostDetails(postID);
     getCurrentUser();
-  }, []);
+  }, [newComment]);
 
   return (
     <div className={styles.modalContainer} onClick={closeHandler}>
@@ -50,6 +62,7 @@ const ViewPost = () => {
             <span>
               {!isEmpty(post.current) ? post.current.likes.length : ""} likes
             </span>
+            <span> {!isEmpty(post.current) ? post.current.caption : ""}</span>
           </div>
         </div>
         <div className={styles.postRight}>
@@ -60,11 +73,12 @@ const ViewPost = () => {
             {!isEmpty(post.current)
               ? post.current.comments.map((comment) => (
                   <div className={styles.comment}>
-                    <img src="" alt="profile " />
+                    <img src={comment.picture} alt="profile " />
                     <p>{comment.text}</p>
                   </div>
                 ))
               : ""}
+            <div ref={scrollRef} />
           </div>
           <div className={styles.addComment}>
             <img src={user.current.picture} alt="profile " />
@@ -74,6 +88,7 @@ const ViewPost = () => {
               onChange={(e) => {
                 setText(e.target.value);
               }}
+              value={text}
             />
             <button
               onClick={() => {

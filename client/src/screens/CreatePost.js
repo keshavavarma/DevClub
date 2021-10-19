@@ -37,7 +37,7 @@ const CreatePost = () => {
       }
       const output = await response.json();
       setUrl(output.url);
-      setSuccess("Uploading Post...");
+      setSuccess("Uploaded Post");
     } catch (err) {
       setError(err.message);
       console.log(err.message);
@@ -55,10 +55,10 @@ const CreatePost = () => {
     }
   };
   useEffect(() => {
-    if (url) {
-      postDetails();
+    if (image) {
+      postToCloud();
     }
-  }, [url]);
+  }, [image]);
   return (
     <div className={styles.modalContainer} onClick={closeHandler}>
       <div className={`${styles.createPost} ${styles.card} `}>
@@ -100,7 +100,7 @@ const CreatePost = () => {
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
           />
-          <button onClick={postToCloud}>
+          <button onClick={postDetails}>
             <SendIcon fontSize="large" sx={{ color: "rgb(0, 119, 255)" }} />
           </button>
         </div>

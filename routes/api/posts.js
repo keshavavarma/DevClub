@@ -150,6 +150,7 @@ router.put("/comment", auth, async (req, res) => {
           comments: {
             text: req.body.text,
             postedBy: req.user.id,
+            picture: req.body.picture,
           },
         },
       },

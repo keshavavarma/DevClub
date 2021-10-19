@@ -13,17 +13,26 @@
 }
 /* profile info */
 .profileInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 0.75rem;
   box-sizing: border-box;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.imgContainer {
+.imgContainerProfile {
   display: flex;
   justify-content: center;
+  align-items: center;
+  max-width: 5rem;
+  max-height: 5rem;
+
   margin-bottom: 0.75rem;
 }
-.imgContainer img {
+.imgContainerProfile img {
   max-width: 5rem;
+  max-height: 5rem;
   border-radius: 50%;
 }
 .profileBio p {
@@ -63,20 +72,24 @@
 @media (min-width: 600px) {
   .profileInfo {
     display: flex;
+    flex-direction: row;
     padding: 0.75rem;
     justify-content: flex-start;
     box-sizing: border-box;
   }
-  .imgContainer {
+  .imgContainerProfile {
     max-width: 15rem;
+    max-height: 15rem;
     margin-right: 3rem;
+    margin-bottom: 0;
   }
   .profileBio {
     flex-grow: 2;
     max-width: 20rem;
   }
-  .imgContainer img {
-    max-width: 10rem;
+  .imgContainerProfile img {
+    max-width: 15rem;
+    max-height: 15rem;
     border-radius: 50%;
   }
   .profileConnections {
@@ -85,7 +98,7 @@
   }
 }
 @media (min-width: 900px) {
-  .imgContainer img {
+  .imgContainerProfile img {
     max-width: 10rem;
     border-radius: 50%;
   }
@@ -110,10 +123,13 @@
 }
 .profilePostContainer img {
   max-width: 5rem;
+  max-height: 5rem;
 }
 .profilePostContainer li {
   display: flex;
   justify-content: center;
+  max-width: 5rem;
+  max-height: 5rem;
   padding-left: 0.2rem;
   padding-right: 0.2rem;
   padding-bottom: 0.75rem;
@@ -129,8 +145,11 @@
   }
   .profilePostContainer img {
     max-width: 15rem;
+    max-height: 15rem;
   }
   .profilePostContainer li {
+    max-width: 15rem;
+    max-height: 15rem;
     margin: 0.5rem;
     margin-top: 0;
   }

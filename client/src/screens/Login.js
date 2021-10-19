@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert } from "@mui/material";
 import styles from "./Login.module.css";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useState, useContext } from "react";
 import { signin } from "../api";
 import { getToken, setToken } from "../util";
@@ -72,6 +72,9 @@ const Login = () => {
         <button className={styles.button} onClick={submitHandler}>
           Login
         </button>
+        <p className={styles.link}>
+          Don't Have an Account? <Link to="/Register">Register</Link>
+        </p>
       </form>
     </div>
   );

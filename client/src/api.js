@@ -1,7 +1,7 @@
 import { getToken } from "./util";
 export const signin = async ({ email, password }) => {
   try {
-    const response = await fetch("/api/auth", {
+    const response = await fetch("http://localhost:5000/api/auth", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -352,7 +352,7 @@ export const unlikePost = async (postID) => {
   }
 };
 
-export const comment = async (text, postID) => {
+export const comment = async (text, postID, picture) => {
   const token = getToken();
   try {
     const response = await fetch("/api/posts/comment", {
@@ -364,6 +364,7 @@ export const comment = async (text, postID) => {
       body: JSON.stringify({
         text,
         postID,
+        picture,
       }),
     });
     if (!response || !response.ok) {
