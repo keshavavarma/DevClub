@@ -86,30 +86,35 @@ const Home = () => {
                   <img src={post.picture} alt="post" />
                 </div>
                 <div className={styles.feedPostActions}>
-                  <button
-                    className="likes"
-                    onClick={() => {
-                      if (
-                        post.likes.filter((id) => id === user.current._id)
-                          .length !== 0
-                      ) {
-                        unlikeHandler(post._id);
-                      } else {
-                        likeHandler(post._id);
-                      }
-                    }}
-                  >
-                    {post.likes.filter((id) => id === user.current._id)
-                      .length !== 0 ? (
-                      <FavoriteIcon sx={{ color: "red" }} fontSize="large" />
-                    ) : (
-                      <FavoriteBorderOutlinedIcon fontSize="large" />
-                    )}
-                  </button>
-                  <span>
-                    {post.likes.length}{" "}
-                    {post.likes.length === 1 ? "like" : "likes"}
-                  </span>
+                  <div className={styles.feedPostActionsLikes}>
+                    <button
+                      className="likes"
+                      onClick={() => {
+                        if (
+                          post.likes.filter((id) => id === user.current._id)
+                            .length !== 0
+                        ) {
+                          unlikeHandler(post._id);
+                        } else {
+                          likeHandler(post._id);
+                        }
+                      }}
+                    >
+                      {post.likes.filter((id) => id === user.current._id)
+                        .length !== 0 ? (
+                        <FavoriteIcon sx={{ color: "red" }} fontSize="large" />
+                      ) : (
+                        <FavoriteBorderOutlinedIcon fontSize="large" />
+                      )}
+                    </button>
+                    <span>
+                      {post.likes.length}{" "}
+                      {post.likes.length === 1 ? "like" : "likes"}
+                    </span>
+                  </div>
+                  <div className={styles.feedPostActionsCaption}>
+                    <span>"{post.caption}"</span>
+                  </div>
                 </div>
               </div>
             );

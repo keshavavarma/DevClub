@@ -30,6 +30,11 @@ router.post(
       return res.status(400).json("Picture is required");
     }
     const { picture, caption } = req.body;
+
+    if (caption.length > 60) {
+      return res.status(400).json("caption can be maximum 60 characters long");
+    }
+
     try {
       let post = await new Post({
         user: req.user.id,
@@ -142,6 +147,10 @@ router.put("/unlike", auth, async (req, res) => {
 // comment on post
 
 router.put("/comment", auth, async (req, res) => {
+  if (req.body.text.length > 60) {
+    return res.status(400).json("comment can be maximum 60 characters long");
+  }
+
   try {
     const comment = await Post.findByIdAndUpdate(
       req.body.postID,

@@ -50,6 +50,14 @@
 .upload {
   border: none;
 }
+.fileUpload {
+  display: none;
+}
+.fileUploadLabel {
+  display: block;
+  border-radius: 0.2rem;
+  width: 100%;
+}
 .addCaption button {
   margin: 0 0.3rem;
   border: none;

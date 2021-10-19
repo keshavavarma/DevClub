@@ -57,14 +57,25 @@
 }
 .feedPostActions {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
   margin: 0.5rem;
 }
-.feedPostActions button {
+.feedPostActionsLikes {
+  display: flex;
+  align-items: center;
+}
+.feedPostActionsLikes button {
   margin: 0.3rem;
   border: none;
 }
-.feedPostActions span {
+.feedPostActionsLikes span {
+  font-size: 1rem;
+  font-weight: 400;
+}
+.feedPostActionsCaption span {
+  margin-left: 1rem;
   font-size: 1rem;
   font-weight: 400;
 }

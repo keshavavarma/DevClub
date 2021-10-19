@@ -1,5 +1,5 @@
 import styles from "./Profile.module.css";
-import { Link, useHistory, useParams, Redirect } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useState, useEffect, useContext, useRef } from "react";
 import {
   followUser,
@@ -133,7 +133,11 @@ const OthersProfile = () => {
               ? posts.map((post) => {
                   return (
                     <li key={post._id}>
-                      <img src={post.picture} alt="post" />
+                      <img
+                        src={post.picture}
+                        alt="post"
+                        onClick={() => history.push(`/ViewPost/${post._id}`)}
+                      />
                     </li>
                   );
                 })

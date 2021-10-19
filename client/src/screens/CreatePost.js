@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./CreatePost.module.css";
 import { useHistory } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { createPost } from "../api";
 import { Alert } from "@mui/material";
 
@@ -48,6 +49,7 @@ const CreatePost = () => {
     console.log("This is url", url);
     const data = await createPost({ picture: url, caption });
     if (data.error) {
+      console.log("Error", data.error.message);
       setError(data.error.message);
     } else {
       console.log("Posted successfully");
@@ -86,11 +88,23 @@ const CreatePost = () => {
           {url ? (
             <img src={url} alt="post" />
           ) : (
-            <input
-              type="file"
-              accept=".jpeg,.jpg,.png"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
+            <label
+              htmlFor="fileUpload"
+              className={styles.fileUploadLabel}
+              role="button"
+            >
+              <CloudUploadIcon
+                fontSize="large"
+                sx={{ color: "rgb(0, 119, 255)" }}
+              />
+              <input
+                id="fileUpload"
+                className={styles.fileUpload}
+                type="file"
+                accept=".jpeg,.jpg,.png"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+            </label>
           )}
         </div>
         <div className={styles.addCaption}>
