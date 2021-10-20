@@ -1,7 +1,7 @@
 import { getToken } from "./util";
 export const signin = async ({ email, password }) => {
   try {
-    const response = await fetch("http://localhost:5000/api/auth", {
+    const response = await fetch("/api/auth", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -51,7 +51,7 @@ export const register = async ({ name, email, password }) => {
 export const createPost = async ({ picture, caption }) => {
   const token = getToken();
   try {
-    const response = await fetch("http://localhost:5000/api/posts/", {
+    const response = await fetch("/api/posts/", {
       method: "POST",
       headers: {
         "content-type": "application/json",
