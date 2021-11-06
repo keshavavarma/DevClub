@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "./ViewPost.module.css";
 import { useHistory, useParams } from "react-router";
-import { comment, getAuthUser, getPost } from "../api";
+import { comment, getAuthUser, getPost, deleteComment } from "../api";
 import { isEmpty } from "../util";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Navbar from "../components/Navbar";
@@ -13,6 +13,7 @@ const ViewPost = () => {
   const post = useRef({});
   const [text, setText] = useState("");
   const [newComment, setNewComment] = useState();
+  const [afterDelete, setAfterDelete] = useState();
   const [error, setError] = useState("");
   const [render, setRender] = useState({});
   const history = useHistory();
@@ -30,13 +31,13 @@ const ViewPost = () => {
 
   const getPostDetails = async (postID) => {
     post.current = await getPost(postID);
-    console.log("Post Details", post.current);
+    console.log("post details", post.current.comments);
     setRender(post.current);
   };
 
   const getCurrentUser = async () => {
     user.current = await getAuthUser();
-    console.log("current user", user.current.picture);
+    console.log("current user", user.current._id);
   };
 
   const addComment = async () => {
@@ -52,12 +53,24 @@ const ViewPost = () => {
     scrollToBottom();
   };
 
+  const deleteMyComment = async (id) => {
+    console.log("comment id", id);
+    const deleted = await deleteComment(id, postID);
+    if (deleted.error) {
+      console.log("Error", deleted.error.message);
+      setError(deleted.error.message);
+    }
+    console.log(deleted);
+    setAfterDelete(deleted);
+    scrollToBottom();
+  };
+
   console.log(typeof post.current === "object", post.current);
 
   useEffect(() => {
     getPostDetails(postID);
     getCurrentUser();
-  }, [newComment]);
+  }, [newComment, afterDelete]);
 
   return (
     <div className={styles.modalContainer} onClick={closeHandler}>
@@ -112,6 +125,14 @@ const ViewPost = () => {
                         }}
                       />
                       <p>{comment.text}</p>
+                      {user.current._id === comment.postedBy && (
+                        <button
+                          className={styles.deleteCommentBtn}
+                          onClick={() => deleteMyComment(comment._id)}
+                        >
+                          X
+                        </button>
+                      )}
                     </div>
                   ))
                 : ""}

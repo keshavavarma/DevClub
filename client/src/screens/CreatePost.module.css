@@ -57,6 +57,7 @@
   display: block;
   border-radius: 0.2rem;
   width: 100%;
+  cursor: pointer;
 }
 .addCaption button {
   margin: 0 0.3rem;

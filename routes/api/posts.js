@@ -174,4 +174,25 @@ router.put("/comment", auth, async (req, res) => {
   }
 });
 
+// delete comment
+
+router.delete("/comment/delete", auth, async (req, res) => {
+  console.log("commentId", req.body.commentId);
+  try {
+    const comment = await Post.findByIdAndUpdate(
+      req.body.postID,
+      {
+        $pull: { comments: { _id: req.body.commentId } },
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(comment);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json("Server error");
+  }
+});
+
 module.exports = router;

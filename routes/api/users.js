@@ -38,12 +38,6 @@ router.post(
       if (user) {
         return res.status(400).json("User already exits");
       }
-      //get user's gravatar
-      // const avatar = gravatar.url(email, {
-      //   s: "200",
-      //   r: "pg",
-      //   d: "mm",
-      // });
 
       // create user instance
       user = new User({

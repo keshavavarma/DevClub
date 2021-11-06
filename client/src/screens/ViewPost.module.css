@@ -159,6 +159,14 @@
   border: none;
   margin: 0 0.3rem;
 }
+.deleteCommentBtn {
+  border: none;
+  margin: 0 0.3rem;
+  color: red;
+}
+.deleteCommentBtn:hover {
+  font-weight: bold;
+}
 @media (min-width: 600px) {
   .post {
     display: flex;

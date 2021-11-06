@@ -402,3 +402,31 @@ export const deleteProfile = async () => {
     return { error: err };
   }
 };
+
+// delete Comment
+
+export const deleteComment = async (commentId, postID) => {
+  const token = getToken();
+  try {
+    const response = await fetch("/api/posts/comment/delete", {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        "x-auth-token": `${token}`,
+      },
+      body: JSON.stringify({
+        commentId,
+        postID,
+      }),
+    });
+    if (!response || !response.ok) {
+      const error = await response.json();
+      throw new Error(error);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    return { error: err };
+  }
+};
