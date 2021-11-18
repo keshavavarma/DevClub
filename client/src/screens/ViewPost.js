@@ -7,6 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Navbar from "../components/Navbar";
 import SendIcon from "@mui/icons-material/Send";
 import { Alert, Avatar } from "@mui/material";
+import Comments from "../components/comments/Comments";
 
 const ViewPost = () => {
   const user = useRef({});
@@ -99,48 +100,13 @@ const ViewPost = () => {
               <FavoriteIcon sx={{ color: "red" }} />
             </span>
             <span className={styles.caption}>
-              {" "}
-              "{!isEmpty(post.current) ? post.current.caption : ""}"
+              {!isEmpty(post.current) && `${post.current.caption}`}
             </span>
           </div>
         </div>
         <div className={styles.postRight}>
-          <div className={styles.commentSection}>
-            <div className={styles.postCommentHeader}>
-              <p>Comments</p>
-            </div>
-            <div className={styles.comments}>
-              {!isEmpty(post.current)
-                ? post.current.comments.map((comment) => (
-                    <div className={styles.comment}>
-                      {/* <img src={comment.picture} alt="profile " /> */}
-                      <Avatar
-                        src={comment.picture}
-                        alt="profile "
-                        className="avatar"
-                        style={{
-                          marginLeft: "0.3rem",
-                          marginRight: "0.3rem",
-                          position: "static",
-                        }}
-                      />
-                      <p>{comment.text}</p>
-                      {user.current._id === comment.postedBy && (
-                        <button
-                          className={styles.deleteCommentBtn}
-                          onClick={() => deleteMyComment(comment._id)}
-                        >
-                          X
-                        </button>
-                      )}
-                    </div>
-                  ))
-                : ""}
-              <div ref={scrollRef} />
-            </div>
-          </div>
-          <div className={styles.addComment}>
-            {/* <img src={user.current.picture} alt="profile " /> */}
+          <Comments post={post} user={user} deleteMyComment={deleteMyComment} />
+          <form className={styles.addComment}>
             <Avatar
               src={user.current.picture}
               alt="profile "
@@ -160,7 +126,8 @@ const ViewPost = () => {
               value={text}
             />
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 if (text.length !== 0) {
                   addComment();
                 }
@@ -168,7 +135,7 @@ const ViewPost = () => {
             >
               <SendIcon sx={{ color: "rgb(0, 119, 255)" }} />
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ const EditProfile = () => {
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
   const [photo, setPhoto] = useState("");
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState(null);
   const [fileName, setFileName] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -24,8 +24,7 @@ const EditProfile = () => {
     if (e.target !== e.currentTarget) return;
     history.push("/Profile");
   };
-  const uploadPicture = async (e) => {
-    e.preventDefault();
+  const uploadPicture = async () => {
     console.log(photo);
     const data = new FormData();
     data.append("file", photo);
@@ -55,14 +54,15 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
-    if (url) {
-      submitHandler();
+    if (photo) {
+      uploadPicture();
     }
     return console.log("EditProfile clean-up");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [photo]);
 
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
     const updatedProfile = await updateProfile({
       name,
       password,
@@ -156,6 +156,7 @@ const EditProfile = () => {
             onChange={(e) => {
               if (e.target.files[0] === undefined) {
                 console.log(e.target.files[0], "selected undefined file");
+                setPhoto("");
               } else {
                 console.log(e.target.files[0]);
                 setPhoto(e.target.files[0]);
@@ -167,7 +168,7 @@ const EditProfile = () => {
         <button
           className={styles.button}
           onClick={(e) => {
-            uploadPicture(e);
+            submitHandler(e);
           }}
         >
           Save
@@ -178,7 +179,7 @@ const EditProfile = () => {
             deleteHandler();
           }}
         >
-          Delete
+          Delete Profile
         </button>
       </form>
     </div>

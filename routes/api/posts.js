@@ -9,7 +9,9 @@ const router = express.Router();
 // @access  public (token not required)
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.find().populate("user", ["name", "picture"]);
+    const posts = await Post.find()
+      .populate("user", ["name", "picture"])
+      .sort({ date: -1 });
     res.json(posts);
   } catch (error) {
     console.log(error.message);

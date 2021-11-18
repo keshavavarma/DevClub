@@ -7,6 +7,7 @@
   background-color: white;
 }
 .card {
+  /* padding: 1rem; */
   margin: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.2rem;
@@ -24,6 +25,7 @@
 .userInfo {
   display: flex;
   align-items: center;
+  padding: 0.5rem 0.5rem;
 }
 .userInfoContainer {
   border-radius: 50%;
@@ -39,7 +41,8 @@
 }
 .userInfo p {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 700;
+  cursor: pointer;
 }
 .feedImgContainer {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -49,6 +52,7 @@
   align-items: center;
   width: 20rem;
   height: 15rem;
+  cursor: pointer;
 }
 .feedImgContainer img {
   max-width: 20rem;
@@ -68,18 +72,20 @@
 }
 .feedPostActionsLikes button {
   margin: 0.3rem;
+  padding: 0;
   border: none;
 }
 .feedPostActionsLikes span {
   font-size: 1rem;
   font-weight: 400;
+  margin-right: 1rem;
 }
 .feedPostActionsCaption span {
   margin-left: 1rem;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 700;
 }
-.createPost {
+.createPostSm {
   position: fixed;
   right: 2rem;
   bottom: 2rem;
@@ -91,11 +97,20 @@
   color: white;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
 }
-.createPost:hover {
+.createPost {
+  display: none;
+}
+.createPostSm:hover {
   background-color: rgba(0, 120, 200, 0.8);
 }
 @media (min-width: 600px) {
+  .createPostSm {
+    display: none;
+  }
   .createPost {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
     width: 20rem;
     margin-top: 1rem;
     color: black;
