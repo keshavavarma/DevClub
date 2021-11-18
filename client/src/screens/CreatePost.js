@@ -45,7 +45,8 @@ const CreatePost = () => {
       //return { error: err };
     }
   };
-  const postDetails = async () => {
+  const postDetails = async (e) => {
+    e.preventDefault();
     console.log("This is url", url);
     const data = await createPost({ picture: url, caption });
     if (data.error) {
@@ -93,10 +94,11 @@ const CreatePost = () => {
               className={styles.fileUploadLabel}
               role="button"
             >
-              <CloudUploadIcon
+              {/* <CloudUploadIcon
                 fontSize="large"
                 sx={{ color: "rgb(0, 119, 255)" }}
-              />
+              /> */}
+              <h1>Click here to upload picture</h1>
               <input
                 id="fileUpload"
                 className={styles.fileUpload}
@@ -107,7 +109,7 @@ const CreatePost = () => {
             </label>
           )}
         </div>
-        <div className={styles.addCaption}>
+        <form className={styles.addCaption}>
           <input
             type="text"
             placeholder="Add Caption..."
@@ -117,7 +119,7 @@ const CreatePost = () => {
           <button onClick={postDetails}>
             <SendIcon fontSize="large" sx={{ color: "rgb(0, 119, 255)" }} />
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
