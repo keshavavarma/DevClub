@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "./ViewPost.module.css";
 import { useHistory, useParams } from "react-router";
-import { comment, getAuthUser, getPost, deleteComment } from "../api";
-import { isEmpty } from "../util";
+import { comment, getAuthUser, getPost, deleteComment } from "../../api";
+import { isEmpty } from "../../util";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Navbar from "../components/Navbar";
+// import Navbar from "../../components/Navbar";
 import SendIcon from "@mui/icons-material/Send";
 import { Alert, Avatar } from "@mui/material";
-import Comments from "../components/comments/Comments";
+import Comments from "../../components/comments/Comments";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ViewPost = () => {
   const user = useRef({});
@@ -16,7 +17,9 @@ const ViewPost = () => {
   const [newComment, setNewComment] = useState();
   const [afterDelete, setAfterDelete] = useState();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [render, setRender] = useState({});
+
   const history = useHistory();
   const { postID } = useParams();
   const scrollRef = useRef();
@@ -43,11 +46,14 @@ const ViewPost = () => {
 
   const addComment = async () => {
     console.log(text);
+    setLoading(true);
     const newComment = await comment(text, postID, user.current.picture);
     if (newComment.error) {
+      setLoading(false);
       console.log("Error", newComment.error.message);
       setError(newComment.error.message);
     }
+    setLoading(false);
     console.log(newComment);
     setText("");
     setNewComment(newComment);
@@ -125,16 +131,25 @@ const ViewPost = () => {
               }}
               value={text}
             />
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                if (text.length !== 0) {
-                  addComment();
-                }
-              }}
-            >
-              <SendIcon sx={{ color: "rgb(0, 119, 255)" }} />
-            </button>
+            {loading ? (
+              <button>
+                <CircularProgress
+                  size="24px"
+                  sx={{ color: "rgb(0, 119, 255)" }}
+                />
+              </button>
+            ) : (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (text.length !== 0) {
+                    addComment();
+                  }
+                }}
+              >
+                <SendIcon sx={{ color: "rgb(0, 119, 255)" }} />
+              </button>
+            )}
           </form>
         </div>
       </div>

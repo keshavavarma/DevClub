@@ -6,24 +6,28 @@ import { useState, useContext } from "react";
 import { signin } from "../../api";
 import { getToken, setToken } from "../../util";
 import { AuthContext } from "../../contexts/AuthContext";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Login = () => {
   const { isAuth } = useContext(AuthContext);
 
   const history = useHistory();
-
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const token = await signin({ email, password });
     if (token.error) {
       setError(token.error.message);
+      setLoading(false);
     } else {
       setToken(token);
       isAuth.current = true;
+      setLoading(false);
       setEmail("");
       setPassword("");
       history.push("/");
@@ -64,8 +68,16 @@ const Login = () => {
             setPassword(e.target.value);
           }}
         ></input>
-        <button className={styles.button} onClick={submitHandler}>
-          Login
+        <button
+          disabled={loading}
+          className={styles.button}
+          onClick={submitHandler}
+        >
+          {loading ? (
+            <CircularProgress color="inherit" fontSize="small" />
+          ) : (
+            "Login"
+          )}
         </button>
         <button
           className={styles.button}

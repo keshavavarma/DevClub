@@ -55,7 +55,7 @@ router.post(
           id: user.id,
         },
       };
-      jwt.sign(payload, JWT_SECRET, { expiresIn: 360000 }, (error, token) => {
+      jwt.sign(payload, JWT_SECRET, { expiresIn: 36000 }, (error, token) => {
         if (error) {
           throw error;
         }

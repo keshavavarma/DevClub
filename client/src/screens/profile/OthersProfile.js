@@ -7,11 +7,11 @@ import {
   getPostsByID,
   getProfileByID,
   unfollowUser,
-} from "../api";
+} from "../../api";
 
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import { Avatar } from "@mui/material";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/navbar/Navbar";
 
 const OthersProfile = () => {
   const { isAuth } = useContext(AuthContext);
