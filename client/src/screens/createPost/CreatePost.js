@@ -3,8 +3,9 @@ import styles from "./CreatePost.module.css";
 import { useHistory } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { createPost } from "../api";
+import { createPost } from "../../api";
 import { Alert } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const CreatePost = () => {
   const [caption, setCaption] = useState("");
@@ -12,6 +13,7 @@ const CreatePost = () => {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
   const closeHandler = (e) => {
@@ -25,6 +27,7 @@ const CreatePost = () => {
     data.append("upload_preset", "pixtagram");
     data.append("cloud_name", "cr7");
     try {
+      setLoading(true);
       const response = await fetch(
         "https://api.cloudinary.com/v1_1/cr7/image/upload",
         {
@@ -34,9 +37,11 @@ const CreatePost = () => {
       );
       if (!response || !response.ok) {
         const error = await response.json();
+        setLoading(false);
         throw new Error("Select a Picture");
       }
       const output = await response.json();
+      setLoading(false);
       setUrl(output.url);
       setSuccess("Uploaded Post");
     } catch (err) {
@@ -98,9 +103,16 @@ const CreatePost = () => {
                 fontSize="large"
                 sx={{ color: "rgb(0, 119, 255)" }}
               /> */}
+              {loading && (
+                <CircularProgress
+                  size="50px"
+                  sx={{ color: "rgb(0, 119, 255)" }}
+                />
+              )}
               <h1>Click here to upload picture</h1>
               <input
                 id="fileUpload"
+                disabled={loading}
                 className={styles.fileUpload}
                 type="file"
                 accept=".jpeg,.jpg,.png"

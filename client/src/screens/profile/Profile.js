@@ -1,10 +1,10 @@
 import styles from "./Profile.module.css";
-import { clearToken } from "../util";
+import { clearToken } from "../../util";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { getMyPosts, getMyProfile } from "../api";
-import { AuthContext } from "../contexts/AuthContext";
-import Navbar from "../components/Navbar";
+import { getMyPosts, getMyProfile } from "../../api";
+import { AuthContext } from "../../contexts/AuthContext";
+import Navbar from "../../components/navbar/Navbar";
 import { Avatar } from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";

@@ -6,23 +6,30 @@ import { useState } from "react";
 import { register } from "../../api";
 import { getToken, setToken } from "../../util";
 import { Link, useHistory } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+
 const Register = () => {
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const token = await register({ name, email, password });
     if (token.error) {
       console.log("don't save");
+      setLoading(false);
       setError(token.error.message);
     } else {
       console.log("token saved");
       setToken(token);
       console.log(getToken());
+      setLoading(false);
       setError("");
       setSuccess("You have successfully Registered,Please login");
       setName("");
@@ -85,8 +92,16 @@ const Register = () => {
             setPassword(e.target.value);
           }}
         ></input>
-        <button className={styles.button} onClick={submitHandler}>
-          Register
+        <button
+          disabled={loading}
+          className={styles.button}
+          onClick={submitHandler}
+        >
+          {loading ? (
+            <CircularProgress color="inherit" fontSize="small" />
+          ) : (
+            "Register"
+          )}
         </button>
         <p className={styles.link}>
           Have an Account? <Link to="/Login">Sign-In</Link>

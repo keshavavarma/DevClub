@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import styles from "../../screens/ViewPost.module.css";
+import styles from "../../screens/viewPost/ViewPost.module.css";
 import { isEmpty } from "../../util";
 import { Avatar } from "@mui/material";
 const Comments = ({ post, user, deleteMyComment }) => {

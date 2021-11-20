@@ -3,9 +3,9 @@ import styles from "./EditProfile.module.css";
 import { Alert } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { deleteProfile, updateProfile } from "../api";
-import { clearToken } from "../util";
-import { AuthContext } from "../contexts/AuthContext";
+import { deleteProfile, updateProfile } from "../../api";
+import { clearToken } from "../../util";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const EditProfile = () => {
   const { isAuth } = useContext(AuthContext);
