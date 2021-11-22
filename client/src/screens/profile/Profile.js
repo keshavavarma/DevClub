@@ -6,8 +6,7 @@ import { getMyPosts, getMyProfile } from "../../api";
 import { AuthContext } from "../../contexts/AuthContext";
 import Navbar from "../../components/navbar/Navbar";
 import { Avatar } from "@mui/material";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Profile = () => {
   const { isAuth } = useContext(AuthContext);
@@ -107,9 +106,17 @@ const Profile = () => {
               ? posts.map((post) => {
                   return (
                     <li key={post._id}>
-                      <img
+                      {/* <img
                         src={post.picture}
                         alt="post"
+                        onClick={(e) => {
+                          history.push(`ViewPost/${post._id}`);
+                        }}
+                      /> */}
+                      <LazyLoadImage
+                        src={post.picture}
+                        alt="post"
+                        effect="blur"
                         onClick={(e) => {
                           history.push(`ViewPost/${post._id}`);
                         }}

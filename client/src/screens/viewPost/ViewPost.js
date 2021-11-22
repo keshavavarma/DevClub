@@ -9,6 +9,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { Alert, Avatar } from "@mui/material";
 import Comments from "../../components/comments/Comments";
 import CircularProgress from "@mui/material/CircularProgress";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const ViewPost = () => {
   const user = useRef({});
@@ -95,7 +96,12 @@ const ViewPost = () => {
       <div className={`${styles.post} ${styles.card}`}>
         <div className={styles.postLeft}>
           <div className={styles.imgContainer}>
-            <img src={post.current.picture} alt="post" />
+            {/* <img src={post.current.picture} alt="post" /> */}
+            <LazyLoadImage
+              src={post.current.picture}
+              alt="post"
+              effect="blur"
+            />
           </div>
           <div className={styles.postActions}>
             {/* <button className={styles.likes}>like</button> */}

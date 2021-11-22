@@ -6,6 +6,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Post = ({ post, user, likeHandler, unlikeHandler, isAuth }) => {
   const history = useHistory();
@@ -45,7 +46,8 @@ const Post = ({ post, user, likeHandler, unlikeHandler, isAuth }) => {
             history.push(`ViewPost/${post._id}`);
           }}
         >
-          <img src={post.picture} alt="post" />
+          {/* <img src={post.picture} alt="post" /> */}
+          <LazyLoadImage src={post.picture} alt="post" effect="blur" />
         </div>
         <div className={styles.feedPostActions}>
           {post.caption && (
