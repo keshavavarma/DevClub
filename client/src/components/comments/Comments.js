@@ -1,9 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styles from "../../screens/viewPost/ViewPost.module.css";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { isEmpty } from "../../util";
 import { Avatar } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+
 const Comments = ({ post, user, deleteMyComment }) => {
   const scrollRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className={styles.commentSection}>
@@ -25,13 +29,23 @@ const Comments = ({ post, user, deleteMyComment }) => {
                     position: "static",
                   }}
                 />
+
                 <p>{comment.text}</p>
+
                 {user.current._id === comment.postedBy && (
                   <button
                     className={styles.deleteCommentBtn}
-                    onClick={() => deleteMyComment(comment._id)}
+                    onClick={async () => {
+                      setLoading(true);
+                      const deleted = await deleteMyComment(comment._id);
+                      setLoading(false);
+                    }}
                   >
-                    X
+                    {loading ? (
+                      <CircularProgress color="error" size="20px" />
+                    ) : (
+                      <DeleteIcon color="error" />
+                    )}
                   </button>
                 )}
               </div>

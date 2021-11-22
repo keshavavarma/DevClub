@@ -6,6 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import { deleteProfile, updateProfile } from "../../api";
 import { clearToken } from "../../util";
 import { AuthContext } from "../../contexts/AuthContext";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const EditProfile = () => {
   const { isAuth } = useContext(AuthContext);
@@ -17,6 +18,7 @@ const EditProfile = () => {
   const [fileName, setFileName] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
 
@@ -31,6 +33,7 @@ const EditProfile = () => {
     data.append("upload_preset", "pixtagram");
     data.append("cloud_name", "cr7");
     try {
+      setLoading(true);
       const response = await fetch(
         "https://api.cloudinary.com/v1_1/cr7/image/upload",
         {
@@ -40,9 +43,11 @@ const EditProfile = () => {
       );
       if (!response || !response.ok) {
         const error = await response.json();
+        setLoading(false);
         throw new Error("Picture Not Updated");
       }
       const output = await response.json();
+      setLoading(false);
       setUrl(output.url);
       console.log("picture uploaded to cloudinary successfully", output.url);
       setSuccess("Picture Updated");
@@ -147,7 +152,13 @@ const EditProfile = () => {
           className={styles.fileUploadLabel}
           role="button"
         >
-          {fileName ? fileName : "Upload Photo"}
+          {loading ? (
+            <CircularProgress size="24px" sx={{ color: "white" }} />
+          ) : fileName ? (
+            fileName
+          ) : (
+            "Upload Photo"
+          )}
           <input
             id="fileUpload"
             className={styles.fileUpload}

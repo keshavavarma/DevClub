@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Alert } from "@mui/material";
 import styles from "./Login.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useContext } from "react";
 import { signin } from "../../api";
-import { getToken, setToken } from "../../util";
+import { setToken } from "../../util";
 import { AuthContext } from "../../contexts/AuthContext";
 import CircularProgress from "@mui/material/CircularProgress";
 

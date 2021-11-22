@@ -70,6 +70,7 @@ const ViewPost = () => {
     console.log(deleted);
     setAfterDelete(deleted);
     scrollToBottom();
+    return deleted;
   };
 
   console.log(typeof post.current === "object", post.current);

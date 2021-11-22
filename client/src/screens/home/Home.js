@@ -50,7 +50,12 @@ const Home = () => {
     <>
       <Navbar />
       <div className={`${styles.container}`}>
-        {/* <h1>Hello</h1> */}
+        {/* <h2>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
+          assumenda sapiente eligendi, sequi quaerat nisi commodi cumque alias.
+          Eum, neque enim! Rerum maxime quos veritatis tenetur dolorem aliquid
+          sunt ad.
+        </h2> */}
         <div className={styles.feed}>
           <button className={styles.createPost} onClick={createHandler}>
             Create Post
@@ -75,7 +80,12 @@ const Home = () => {
             <h2>No Posts</h2>
           )}
         </div>
-        {/* <h1>There</h1> */}
+        {/* <h2>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati,
+          aliquid, tempore laboriosam suscipit repudiandae dolores odit deserunt
+          officia harum ipsum commodi illum sit ut reiciendis voluptate eum
+          incidunt! Nemo, error!
+        </h2> */}
       </div>
     </>
   );
