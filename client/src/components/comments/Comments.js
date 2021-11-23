@@ -4,6 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { isEmpty } from "../../util";
 import { Avatar } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import Comment from "./Comment";
 
 const Comments = ({ post, user, deleteMyComment }) => {
   const scrollRef = useRef();
@@ -17,38 +18,11 @@ const Comments = ({ post, user, deleteMyComment }) => {
       <div className={styles.comments}>
         {!isEmpty(post.current)
           ? post.current.comments.map((comment) => (
-              <div className={styles.comment}>
-                {/* <img src={comment.picture} alt="profile " /> */}
-                <Avatar
-                  src={comment.picture}
-                  alt="profile "
-                  className="avatar"
-                  style={{
-                    marginLeft: "0.3rem",
-                    marginRight: "0.3rem",
-                    position: "static",
-                  }}
-                />
-
-                <p>{comment.text}</p>
-
-                {user.current._id === comment.postedBy && (
-                  <button
-                    className={styles.deleteCommentBtn}
-                    onClick={async () => {
-                      setLoading(true);
-                      const deleted = await deleteMyComment(comment._id);
-                      setLoading(false);
-                    }}
-                  >
-                    {loading ? (
-                      <CircularProgress color="error" size="20px" />
-                    ) : (
-                      <DeleteIcon color="error" />
-                    )}
-                  </button>
-                )}
-              </div>
+              <Comment
+                user={user}
+                comment={comment}
+                deleteMyComment={deleteMyComment}
+              />
             ))
           : ""}
         <div ref={scrollRef} />
