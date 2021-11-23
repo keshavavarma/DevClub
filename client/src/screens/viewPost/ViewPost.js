@@ -104,7 +104,6 @@ const ViewPost = () => {
             />
           </div>
           <div className={styles.postActions}>
-            {/* <button className={styles.likes}>like</button> */}
             <span>
               {!isEmpty(post.current) ? post.current.likes.length : ""}
               {post.current.likes && post.current.likes.length === 1

@@ -23,6 +23,7 @@ const OthersProfile = () => {
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [render, setRender] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { userID } = useParams();
 
   const history = useHistory();
@@ -33,14 +34,18 @@ const OthersProfile = () => {
 
   const followHandler = async (followID) => {
     // follow logic
+    setLoading(true);
     const profile = await followUser(followID);
     setRender(!render);
+    setLoading(false);
   };
 
   const unfollowHandler = async (followID) => {
     // unfollow logic
+    setLoading(true);
     await unfollowUser(followID);
     setRender(!render);
+    setLoading(false);
   };
 
   const profileDetails = async () => {
@@ -103,20 +108,22 @@ const OthersProfile = () => {
                 .length !== 0 ? (
                 <button
                   className="edit"
+                  disabled={loading}
                   onClick={() => {
                     unfollowHandler(userID);
                   }}
                 >
-                  Unfollow
+                  {loading ? "loading..." : "Unfollow"}
                 </button>
               ) : (
                 <button
                   className="edit"
+                  disabled={loading}
                   onClick={() => {
                     followHandler(userID);
                   }}
                 >
-                  Follow
+                  {loading ? "loading..." : "follow"}
                 </button>
               )}
             </div>

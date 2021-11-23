@@ -118,6 +118,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  height: 100vh;
+  overflow: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.profilePostContainer::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
 }
 .profilePosts h3 {
   font-size: 1.1rem;
