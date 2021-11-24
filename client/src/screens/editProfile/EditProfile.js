@@ -84,6 +84,10 @@ const EditProfile = () => {
   };
 
   const deleteHandler = async () => {
+    const password = prompt("Please Enter Admin password to delete");
+    if (password !== "sheldoncooper") {
+      return;
+    }
     const deletedMsg = await deleteProfile();
     if (deletedMsg.error) {
       console.log(deletedMsg.error.message);
