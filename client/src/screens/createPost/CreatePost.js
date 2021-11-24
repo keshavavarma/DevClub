@@ -43,7 +43,7 @@ const CreatePost = () => {
       const output = await response.json();
       setLoading(false);
       setUrl(output.url);
-      setSuccess("Uploaded Post");
+      setSuccess("Picture Ready,You can Post Now !!");
     } catch (err) {
       setError(err.message);
       console.log(err.message);
