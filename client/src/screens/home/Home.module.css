@@ -1,10 +1,6 @@
-/* .home {
-  background: linear-gradient(
-    90deg,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(252, 70, 107, 1) 100%
-  );
-} */
+.home {
+  background-color: white;
+}
 .container {
   /* display: flex;
   justify-content: space-between; */
