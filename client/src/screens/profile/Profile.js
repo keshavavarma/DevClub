@@ -49,83 +49,85 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-      <div className={`${styles.profile} ${styles.container}`}>
-        <div className={styles.profileInfo}>
-          {/* <div className={styles.imgContainerProfile}>
+      <div className={styles.home}>
+        <div className={`${styles.profile} ${styles.container}`}>
+          <div className={styles.profileInfo}>
+            {/* <div className={styles.imgContainerProfile}>
             <img src={photo} alt="profile " />
           </div> */}
-          <Avatar
-            src={
-              isAuth.current &&
-              (photo
-                ? photo
-                : `https://avatars.dicebear.com/api/initials/${name}.svg`)
-            }
-            className="avatar"
-            style={{
-              height: "200px",
-              width: "200px",
-              marginRight: "1rem",
-              position: "static",
-            }}
-          />
-          <div className={styles.profileBio}>
-            <p className={styles.userName}>{name}</p>
-            <p className={styles.userBio}>{bio}</p>
-            <div className={styles.profileConnections}>
-              <p>
-                Posts <span>{posts.length}</span>
-              </p>
-              <p>
-                followers <span>{followers && followers.length}</span>
-              </p>
-              <p>
-                following <span>{following && following.length}</span>
-              </p>
-            </div>
-            <div className={styles.profileActions}>
-              <button className="edit" onClick={editHandler}>
-                Edit
-              </button>
-              <button className="logout" onClick={logoutHandler}>
-                Logout
-              </button>
+            <Avatar
+              src={
+                isAuth.current &&
+                (photo
+                  ? photo
+                  : `https://avatars.dicebear.com/api/initials/${name}.svg`)
+              }
+              className="avatar"
+              style={{
+                height: "200px",
+                width: "200px",
+                marginRight: "1rem",
+                position: "static",
+              }}
+            />
+            <div className={styles.profileBio}>
+              <p className={styles.userName}>{name}</p>
+              <p className={styles.userBio}>{bio}</p>
+              <div className={styles.profileConnections}>
+                <p>
+                  Posts <span>{posts.length}</span>
+                </p>
+                <p>
+                  followers <span>{followers && followers.length}</span>
+                </p>
+                <p>
+                  following <span>{following && following.length}</span>
+                </p>
+              </div>
+              <div className={styles.profileActions}>
+                <button className="edit" onClick={editHandler}>
+                  Edit
+                </button>
+                <button className="logout" onClick={logoutHandler}>
+                  Logout
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={styles.profilePosts}>
-          {posts.length !== 0 ? (
-            <h3>Posts</h3>
-          ) : (
-            <h3>
-              No Posts Available,<Link to="/CreatePost">Create Post?</Link>
-            </h3>
-          )}
-          <ul className={styles.profilePostContainer}>
-            {posts.length !== 0
-              ? posts.map((post) => {
-                  return (
-                    <li key={post._id}>
-                      {/* <img
+          <div className={styles.profilePosts}>
+            {posts.length !== 0 ? (
+              <h3>Posts</h3>
+            ) : (
+              <h3>
+                No Posts Available,<Link to="/CreatePost">Create Post?</Link>
+              </h3>
+            )}
+            <ul className={styles.profilePostContainer}>
+              {posts.length !== 0
+                ? posts.map((post) => {
+                    return (
+                      <li key={post._id}>
+                        {/* <img
                         src={post.picture}
                         alt="post"
                         onClick={(e) => {
                           history.push(`ViewPost/${post._id}`);
                         }}
                       /> */}
-                      <LazyLoadImage
-                        src={post.picture}
-                        alt="post"
-                        effect="blur"
-                        onClick={(e) => {
-                          history.push(`ViewPost/${post._id}`);
-                        }}
-                      />
-                    </li>
-                  );
-                })
-              : ""}
-          </ul>
+                        <LazyLoadImage
+                          src={post.picture}
+                          alt="post"
+                          effect="blur"
+                          onClick={(e) => {
+                            history.push(`ViewPost/${post._id}`);
+                          }}
+                        />
+                      </li>
+                    );
+                  })
+                : ""}
+            </ul>
+          </div>
         </div>
       </div>
     </>

@@ -49,43 +49,45 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className={`${styles.container}`}>
-        {/* <h2>
+      <div className={styles.home}>
+        <div className={`${styles.container}`}>
+          {/* <h2>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
           assumenda sapiente eligendi, sequi quaerat nisi commodi cumque alias.
           Eum, neque enim! Rerum maxime quos veritatis tenetur dolorem aliquid
           sunt ad.
         </h2> */}
-        <div className={styles.feed}>
-          <button className={styles.createPost} onClick={createHandler}>
-            Create Post
-          </button>
-          <button className={styles.createPostSm} onClick={createHandler}>
-            +
-          </button>
-          {feed.length !== 0 ? (
-            feed.map((post) => (
-              <Post
-                key={post._id}
-                post={post}
-                user={user}
-                isAuth={isAuth}
-                // loading={loading}
-                // setLoading={setLoading}
-                likeHandler={likeHandler}
-                unlikeHandler={unlikeHandler}
-              />
-            ))
-          ) : (
-            <h2>No Posts</h2>
-          )}
-        </div>
-        {/* <h2>
+          <div className={styles.feed}>
+            <button className={styles.createPost} onClick={createHandler}>
+              Create Post
+            </button>
+            <button className={styles.createPostSm} onClick={createHandler}>
+              +
+            </button>
+            {feed.length !== 0 ? (
+              feed.map((post) => (
+                <Post
+                  key={post._id}
+                  post={post}
+                  user={user}
+                  isAuth={isAuth}
+                  // loading={loading}
+                  // setLoading={setLoading}
+                  likeHandler={likeHandler}
+                  unlikeHandler={unlikeHandler}
+                />
+              ))
+            ) : (
+              <h2>No Posts</h2>
+            )}
+          </div>
+          {/* <h2>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati,
           aliquid, tempore laboriosam suscipit repudiandae dolores odit deserunt
           officia harum ipsum commodi illum sit ut reiciendis voluptate eum
           incidunt! Nemo, error!
         </h2> */}
+        </div>
       </div>
     </>
   );
