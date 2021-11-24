@@ -1,6 +1,10 @@
-.home {
-  background-color: whitesmoke;
-}
+/* .home {
+  background: linear-gradient(
+    90deg,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(252, 70, 107, 1) 100%
+  );
+} */
 
 .container {
   width: 100%;
